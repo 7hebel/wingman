@@ -358,13 +358,16 @@ def load_visible_windows(only_screen: monitor.Screen | None = None) -> list[Wind
 
         if not IsIconic(hwnd) and IsWindowVisible(hwnd) and GetWindowText(hwnd) != '' and isCloaked.value == 0:
             if not (title_info.rgstate[0] & 0x00008000):
-                visible_windows.append(load_window_hwnd(hwnd))
+                window = load_window_hwnd(hwnd)
+
+                if window:
+                    visible_windows.append(window)
 
     EnumWindows(callback, None)
 
     if only_screen is not None:
         return filter(lambda w: w.screen == only_screen, visible_windows)
-
+        
     return visible_windows
 
 
@@ -478,4 +481,3 @@ def shift_focus_right() -> None:
         next_win = leftmost.group.windows[0]
         next_win.focus()
         next_win.log("(Overlappingly) Shifted focus from another window.")
-

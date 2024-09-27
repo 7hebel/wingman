@@ -24,8 +24,10 @@ BLUR_TOOGLE_SHORTCUT = "#+b"
 # Ignoring.
 IGNORE_WIN_TEXT = [
     "Snipping Tool Overlay",
+    "Recording toolbar",
     "Calculator",
-    "Mechvibes"
+    "Mechvibes",
+    "Delete File",
 ] 
 INGORE_CHILDREN = True
 
