@@ -7,4 +7,4 @@
 </div>
 
 
-![vid test](https://raw.githubusercontent.com/7hebel/wingman/refs/heads/main/assets/showcase-vid/blur_usage.webp)
+![Showcase](https://raw.githubusercontent.com/7hebel/wingman/refs/heads/main/assets/showcase-vid/tiling_usage.webp)
