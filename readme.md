@@ -51,6 +51,7 @@
 ### 📄 Settings file: `/modules/settings.py`
 
 | **NAME** | **DESCRIPTION** | *DEFAULT* |
+| :--- | :--- | ---: |
 | `BLUR_MODE_ONLY` | Disable all tiling features and shortcuts, leaves only the blur and opacity management enabled. | `False` |
 | `MARGIN_PX` | Amount of pixels in between tiled windows and screen borders. | `16` |
 | `WINDOW_MIN_W` | Minimum window width in pixels. *(Some windows has hardcoded minimum width that cannot be changed)* | `480` |
