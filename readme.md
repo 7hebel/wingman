@@ -20,7 +20,7 @@
     <h2>✨ Features</h2>
 </div>
 
-- 🔮 <b>Apply background blur to ANY window.</b>
+- 🔮 <b>Apply background blur to any window.</b>
 
 - 🪟 Horizontal windows tiling with margin.
 
@@ -30,4 +30,15 @@
 
 - 🛠️ Easily configurable.
 
+<div align="center">
+    <br>
+    <h2>💾 Installation</h2>
+</div>
 
+1. Ensure Python3 and PiP are installed
+
+2. Clone / Download this repo.
+
+3. `pip install -r requirements.txt`
+
+4. `py main.py`
