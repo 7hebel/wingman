@@ -299,14 +299,6 @@ class Window:
         return self.rect.w - settings.MARGIN_PX >= self.minimum_width
 
 
-def get_pid(hwnd: int) -> int:
-    """ Returns window's ProcessID. """
-
-    pid = wintypes.DWORD()
-    user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid))
-    return pid.value
-
-
 def load_window_hwnd(hwnd, force_reinit: bool = False) -> Window | None:
     """
     Initialize (or load cached) Window object by it's handle if it shouldn't be ignored.
@@ -328,7 +320,7 @@ def load_window_hwnd(hwnd, force_reinit: bool = False) -> Window | None:
         for win in _windows_cache.values():
             # Ensure the main app's window will be handled, not a child.
             owner = win32gui.GetWindow(hwnd, win32con.GW_OWNER)
-            if get_pid(win.hwnd) == get_pid(hwnd) or owner != 0:
+            if owner != 0:
                 return
 
     rect = Rect.from_list(win32gui.GetWindowRect(hwnd))
