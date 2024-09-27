@@ -1,3 +1,6 @@
+# Mode.
+BLUR_MODE_ONLY = False  # Disable all tiling managements. Keep only BgBlur and opacity features.
+
 # Windows.
 MARGIN_PX = 16
 WINDOW_MIN_W = 480

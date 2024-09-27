@@ -70,15 +70,16 @@ class Window:
         self.opacity = 255
         self.l_shift = 0
 
-        self.__fix_max_win()
-        self._bounding_error = screen_test.get_bounding_diff(self.hwnd)
-        self._min_w = screen_test.get_window_min_width(self.hwnd)
+        if not settings.BLUR_MODE_ONLY:
+            self.__fix_max_win()
+            self._bounding_error = screen_test.get_bounding_diff(self.hwnd)
+            self._min_w = screen_test.get_window_min_width(self.hwnd)
 
-        if self.screen is not None:
-            if not self.screen.attach_window(self):
-                if not arrange.attach_to_any_group(self):
-                    self.log("There is no group that could fit this window...")
-                    self.minimize()
+            if self.screen is not None:
+                if not self.screen.attach_window(self):
+                    if not arrange.attach_to_any_group(self):
+                        self.log("There is no group that could fit this window...")
+                        self.minimize()
 
         _WindowUpdatesMonitor(self.hwnd, self.on_rect_update, self.on_window_killed)
 
