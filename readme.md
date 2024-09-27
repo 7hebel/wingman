@@ -4,7 +4,6 @@
     <br>
     <br>
     <h2>🪽 Windows Tiling Manager</h2>
-    <h5>For Windows only.</h5>
 </div>
 
 ![Showcase](https://raw.githubusercontent.com/7hebel/wingman/refs/heads/main/assets/showcase-vid/tiling_usage.webp)
@@ -21,8 +20,14 @@
     <h2>✨ Features</h2>
 </div>
 
-- Horizontal windows tiling with margin.
+- 🔮 <b>Apply background blur to ANY window.</b>
 
-- Intuitive keyboard shortcuts
+- 🪟 Horizontal windows tiling with margin.
+
+- ⌨️ Intuitive keyboard shortcuts.
+
+- 🖥️ Multiple screens support.
+
+- 🛠️ Easily configurable.
 
 
