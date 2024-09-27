@@ -1,8 +1,8 @@
 <div align="center">
+    <h2>🪽 Windows Tiling Manager</h2>
     <br>
     <img src="./assets/full_logo.png" width="280" alt="Wingman" />
     <br>
-    <h3>🪽 Windows Tiling Manager</h3>
 </div>
 
 
