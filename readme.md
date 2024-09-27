@@ -1,1 +1,1 @@
-<!-- [![Test video](https://raw.githubusercontent.com/7hebel/wingman/refs/heads/main/assets/showcase-img/blur-2.png)](https://github.com/7hebel/wingman/raw/refs/heads/main/assets/showcase-vid/blur_usage.mp4) -->
+![vid test](https://raw.githubusercontent.com/7hebel/wingman/refs/heads/main/assets/showcase-vid/blur_usage.webp)
