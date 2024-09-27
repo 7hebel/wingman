@@ -50,6 +50,16 @@
 
 ### 📄 Settings file: `/modules/settings.py`
 
+##### #️⃣ Keyboard keys.
+| **ID** | **REAL** |
+| - | - |
+| `#` | `Windows` |
+| `!` | `Alt` |
+| `+` | `Shift` |
+| `^` | `Ctrl` |
+
+
+##### 🛠️ Settings.
 | **NAME** | **DESCRIPTION** | *DEFAULT* |
 | :- | :--- | -: |
 | `BLUR_MODE_ONLY` | Disable all tiling features and shortcuts, leaves only the blur and opacity management enabled. | `False` |
@@ -63,7 +73,7 @@
 | `FOCUS_KEY` | Leader key for shifting focus between windows on the screen. | `#+` |
 | `OPACITY_KEY` | Leader key for updating window's opacity with mouse wheel | `^+` |
 | `BLUR_TOOGLE_SHORTCUT` | Full shortcut to toogle background blur for window | `#+b` |
-| `IGNORE_WIN_TEXT` | List of window's titles that will be ignored. | ` "Snipping Tool Overlay","Recording toolbar", "Calculator", "Mechvibes", "Delete File" ` |
+| `IGNORE_WIN_TEXT` | List of window's titles that will be ignored. | ` "Snipping Tool Overlay", "Recording toolbar", "Calculator", "Mechvibes", "Delete File" ` |
 | `INGORE_CHILDREN` | Ignore sub-windows (highly recomended) | `True` |
 | `OVERLAPPING_FOCUS_SHIFT` | Shifting focus to the right on the rightmost window will overlap screen and apply focus to the leftmost window. | `True` |
 
