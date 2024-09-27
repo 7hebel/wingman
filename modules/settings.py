@@ -4,7 +4,7 @@ BLUR_MODE_ONLY = False  # Disable all tiling managements. Keep only BgBlur and o
 # Windows.
 MARGIN_PX = 16
 WINDOW_MIN_W = 480
-OPACITY_VALUE_CHANGE = 5
+OPACITY_VALUE_STEP = 5
 DEFAULT_OPACITY_ON_BLUR = 225
 MAX_WINS_IN_GROUP = 4
 

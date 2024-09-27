@@ -267,13 +267,13 @@ class Window:
     def decrease_opacity(self) -> None:
         """ Decrease window's opacity by fixed value. """
 
-        self.opacity -= settings.OPACITY_VALUE_CHANGE
+        self.opacity -= settings.OPACITY_VALUE_STEP
         self.__update_opacity()
 
     def increase_opacity(self) -> None:
         """ Increase window's opacity by fixed value. """
 
-        self.opacity += settings.OPACITY_VALUE_CHANGE
+        self.opacity += settings.OPACITY_VALUE_STEP
         self.__update_opacity()
 
     def shift_left(self) -> None:
