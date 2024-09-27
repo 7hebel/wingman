@@ -1,5 +1,9 @@
 <div align="center">
-    <img src="./assets/full_logo.png" width="230" alt="Wingman" />
+    <br>
+    <img src="./assets/full_logo.png" width="280" alt="Wingman" />
+    <br>
+    <h1>🪽 Windows Tiling Manager</h1>
 </div>
+
 
 ![vid test](https://raw.githubusercontent.com/7hebel/wingman/refs/heads/main/assets/showcase-vid/blur_usage.webp)
