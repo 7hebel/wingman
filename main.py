@@ -48,3 +48,4 @@ while 1:
     time.sleep(1)
 
 # mouse drag and drop window to group
+# bgblur slave rect to GetWindowRect not extended frame

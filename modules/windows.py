@@ -353,10 +353,10 @@ def load_visible_windows(only_screen: monitor.Screen | None = None) -> list[Wind
         title_info.cbSize = ctypes.sizeof(title_info)
         ctypes.windll.user32.GetTitleBarInfo(hwnd, ctypes.byref(title_info))
 
-        isCloaked = ctypes.c_int(0)
-        ctypes.WinDLL("dwmapi").DwmGetWindowAttribute(hwnd, 14, ctypes.byref(isCloaked), ctypes.sizeof(isCloaked))
+        is_cloaked = ctypes.c_int(0)
+        ctypes.WinDLL("dwmapi").DwmGetWindowAttribute(hwnd, 14, ctypes.byref(is_cloaked), ctypes.sizeof(is_cloaked))
 
-        if not IsIconic(hwnd) and IsWindowVisible(hwnd) and GetWindowText(hwnd) != '' and isCloaked.value == 0:
+        if not IsIconic(hwnd) and IsWindowVisible(hwnd) and GetWindowText(hwnd) != '' and is_cloaked.value == 0:
             if not (title_info.rgstate[0] & 0x00008000):
                 window = load_window_hwnd(hwnd)
 
@@ -367,7 +367,7 @@ def load_visible_windows(only_screen: monitor.Screen | None = None) -> list[Wind
 
     if only_screen is not None:
         return filter(lambda w: w.screen == only_screen, visible_windows)
-        
+
     return visible_windows
 
 
