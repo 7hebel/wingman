@@ -2,7 +2,7 @@
     <br>
     <img src="./assets/full_logo.png" width="280" alt="Wingman" />
     <br>
-    <h1>🪽 Windows Tiling Manager</h1>
+    <h3>🪽 Windows Tiling Manager</h3>
 </div>
 
 
