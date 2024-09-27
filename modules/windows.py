@@ -10,7 +10,6 @@ from win32gui import EnumWindows, GetWindowText, IsWindowVisible, IsIconic
 from collections.abc import Callable
 from dataclasses import dataclass
 from threading import Thread
-from ctypes import wintypes
 import pywintypes
 import win32gui
 import win32api
