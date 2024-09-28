@@ -14,13 +14,13 @@ ahk = AHK()
 
 if not settings.BLUR_MODE_ONLY:
 
-    # Move window to anchors.
+    # Move window.
     ahk.add_hotkey(f"{settings.PUSH_KEY}Right", lambda: windows.get_focused_window().shift_right())  # Win + RIGHT
     ahk.add_hotkey(f"{settings.PUSH_KEY}Left", lambda: windows.get_focused_window().shift_left())    # Win + LEFT
     ahk.add_hotkey(f"{settings.PUSH_KEY}Up", lambda: windows.get_focused_window().maximize())        # Win + UP
     ahk.add_hotkey(f"{settings.PUSH_KEY}Down", lambda: windows.get_focused_window().unmaximize())    # Win + DOWN
 
-    # # Resize windows in groups.
+    # Resize windows in groups.
     ahk.add_hotkey(f"{settings.RESIZE_KEY}Left", lambda: windows.get_focused_window().resize_left())    # Win + Alt + LEFT
     ahk.add_hotkey(f"{settings.RESIZE_KEY}Right", lambda: windows.get_focused_window().resize_right())  # Win + Alt + RIGHT
 
@@ -39,13 +39,11 @@ ahk.add_hotkey(f"{settings.OPACITY_KEY}WheelDown", lambda: windows.get_focused_w
 # Toogle blur.
 ahk.add_hotkey(f"{settings.BLUR_TOOGLE_SHORTCUT}", lambda: windows.get_focused_window().toogle_blur())  # Win + shift + b
 
-
 ahk.start_hotkeys()
 logs.system_log("Started mainloop...")
-
 
 while 1:
     time.sleep(1)
 
 # mouse drag and drop window to group
-# bgblur slave rect to GetWindowRect not extended frame
+# minimizing a window causes all groups to rearrange losing config

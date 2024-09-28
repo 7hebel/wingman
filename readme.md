@@ -45,19 +45,25 @@
 
 <div align="center">
     <br>
+    <h2>⌨️ Default shortcuts</h2>
+    <br>
+    <img src="./assets/shortcuts.png">
+</div>
+
+<div align="center">
+    <br>
     <h2>🔧 Configuration</h2>
 </div>
 
 ### 📄 Settings file: `/modules/settings.py`
 
-##### #️⃣ Keyboard keys.
+##### #️⃣ Keys.
 | **ID** | **REAL** |
 | - | - |
 | `#` | `Windows` |
 | `!` | `Alt` |
 | `+` | `Shift` |
 | `^` | `Ctrl` |
-
 
 ##### 🛠️ Settings.
 | **NAME** | **DESCRIPTION** | *DEFAULT* |
@@ -77,5 +83,12 @@
 | `INGORE_CHILDREN` | Ignore sub-windows (highly recomended) | `True` |
 | `OVERLAPPING_FOCUS_SHIFT` | Shifting focus to the right on the rightmost window will overlap screen and apply focus to the leftmost window. | `True` |
 
+<div align="center">
+    <br>
+    <h2>🚩 Startup flags.</h2>
+</div>
 
+- `--supress` / `-s` - Supress logs.
+
+- `--startup` - Start wingman at system startup.
 
