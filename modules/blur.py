@@ -2,6 +2,8 @@ from BlurWindow.blurWindow import blur
 from ctypes import windll
 from tkinter import Tk
 import threading
+import win32gui
+import win32con
 
 from typing import TYPE_CHECKING
 
@@ -31,6 +33,7 @@ class BlurSlaveWindow:
 
         hwnd = windll.user32.GetParent(self.root.winfo_id())
         blur(hwnd, Acrylic=False, Dark=False)
+        win32gui.SetWindowPos(hwnd, self.__figure_window.hwnd, 0, 0, 0, 0, win32con.SWP_NOMOVE | win32con.SWP_NOSIZE)
 
         self.root.mainloop()
 
@@ -40,7 +43,7 @@ class BlurSlaveWindow:
         master_rect = self.__figure_window.rect
         self.root.geometry(master_rect.geometry())
         self.root.update()
-
+        
     def destroy(self) -> None:
         """ Exit slave window. """
 

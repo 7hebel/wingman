@@ -83,7 +83,7 @@ class Group:
 
         return True
 
-    def rearrange(self) -> None:
+    def rearrange(self, _fix_call: bool = False) -> None:
         """ Arrange windows in group respecting border shifts. """
 
         if not self.windows:
@@ -114,6 +114,14 @@ class Group:
             )
 
             prev_rect = win.draw_in_rect(rect)
+         
+        if not self.validate_arrangement():
+            if _fix_call:
+                return self.resize_window(self.get_neighbour(self.windows[-1], Direction.LEFT), Direction.LEFT, _fix_call=True)
+
+            self.reset_shifts()
+            self.rearrange(_fix_call=True)
+        
 
     def reset_shifts(self) -> None:
         """ Reset border shift value in all windows in this group. """
@@ -204,7 +212,7 @@ class Group:
 
         return self.windows[self.__win_index(window) + 1:]
 
-    def resize_window(self, window: "Window", direction: Direction) -> None:
+    def resize_window(self, window: "Window", direction: Direction, _fix_call: bool = False) -> None:
         """ Try to update selected window's size. It may update other windows to make space for selected one. """
 
         if self.is_leftmost(window) and self.is_rightmost(window):
@@ -212,10 +220,10 @@ class Group:
 
         # If shrinking border window, expand neighbour instead.
         if self.is_leftmost(window) and direction == Direction.LEFT:
-            return self.resize_window(self.get_neighbour(window, Direction.RIGHT), direction)
+            return self.resize_window(self.get_neighbour(window, Direction.RIGHT), direction, _fix_call)
 
         if self.is_rightmost(window) and direction == Direction.RIGHT:
-            return self.resize_window(self.get_neighbour(window, Direction.LEFT), direction)
+            return self.resize_window(self.get_neighbour(window, Direction.LEFT), direction, _fix_call)
 
         # When the window is expanded, decrease it's border shift instead of finding other strategy.
         if direction == Direction.RIGHT and window.l_shift < 0:
@@ -244,17 +252,21 @@ class Group:
                     for skipped_win in unshrinkable_wins:
                         skipped_win.l_shift += settings.MARGIN_PX
 
-            self.rearrange()
-            return
+            return self.rearrange(_fix_call=_fix_call)
 
         window.log("Cannot stretch this window.")
+
+    def validate_arrangement(self) -> bool:
+        """ Check if the last window in the group is not overflowing from the screen. (No need to check the first window.) """
+        
+        return self.windows[-1].rect.right < self.screen_rect.right
 
 
 def attach_to_any_group(window: "Window") -> bool:
     """ Try to attach window to any group that can fit it. """
 
     for group in Group.all_groups:
-        if group.attach_window(window, Direction.RIGHT):
+        if group.attach_window(window, Direction.LEFT):
             return True
 
     return False

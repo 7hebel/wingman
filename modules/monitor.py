@@ -41,7 +41,7 @@ class Screen:
             elif screen.rect.left == self.rect.right:
                 self.right_monitor = screen
 
-    def attach_window(self, window: "Window", from_direction: Direction = Direction.RIGHT) -> bool:
+    def attach_window(self, window: "Window", from_direction: Direction = Direction.LEFT) -> bool:
         """ Attach window to this screen's group. """
 
         return self.group.attach_window(window, from_direction)

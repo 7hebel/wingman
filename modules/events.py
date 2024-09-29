@@ -61,14 +61,14 @@ class _EventsListener:
                 if hwnd not in self.buffer:
                     win = windows.load_window_hwnd(hwnd, force_reinit=True)
 
-                    if win is not None:
+                    if win and win.screen:
                         win.screen.group.rearrange()
 
             for hwnd in self.buffer:
                 if hwnd not in active_hwnds:
                     win = windows._windows_cache.get(hwnd)
-                    if win is not None:
 
+                    if win is not None:
                         # win.screen might be lost due to minimized rect.
                         for group in arrange.Group.all_groups:
                             group.remove_window(win)

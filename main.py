@@ -46,4 +46,7 @@ while 1:
     time.sleep(1)
 
 # mouse drag and drop window to group
-# minimizing a window causes all groups to rearrange losing config
+# if cannot fit window to other group when shifting, replace windows
+# check window's opacity and dont assume its 255
+
+# wide window might replace std window when more than 2 wins in group.

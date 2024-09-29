@@ -77,8 +77,11 @@ class Window:
             if self.screen is not None:
                 if not self.screen.attach_window(self):
                     if not arrange.attach_to_any_group(self):
-                        self.log("There is no group that could fit this window...")
-                        self.minimize()
+                        hide_win = self.screen.group.windows[0]
+                        hide_win.minimize()
+                        
+                        self.screen.attach_window(self)
+                        self.log(f"There was no group that could fit his window, replaced window: {hide_win.text}")
 
         _WindowUpdatesMonitor(self.hwnd, self.on_rect_update, self.on_window_killed)
 
@@ -103,7 +106,7 @@ class Window:
     def on_window_killed(self) -> None:
         """ Standard window kill callback. """
 
-        self.screen.dettach_window(self)
+        self._screen.dettach_window(self)
 
         if self.blur_bg is not None:
             self.blur_bg.destroy()
@@ -121,9 +124,7 @@ class Window:
 
     @property
     def rect(self) -> Rect:
-        if self._screen is None:
-            self._rect = Rect.from_list(win32gui.GetWindowRect(self.hwnd))
-
+        self._rect = Rect.from_list(win32gui.GetWindowRect(self.hwnd))
         return self._rect
 
     @rect.setter
@@ -132,8 +133,9 @@ class Window:
 
     @property
     def screen(self) -> monitor.Screen:
-        if self._screen is None:
+        if not self._screen:
             self._screen = monitor.get_screen(win32api.MonitorFromRect(self.rect.raw))
+
         return self._screen
 
     @screen.setter
@@ -168,12 +170,11 @@ class Window:
 
     def toogle_blur(self) -> None:
         """ Toogle blur background slave window. """
-
         if self.blur_bg is None:
             self.blur_bg = blur.BlurSlaveWindow(self)
             self.opacity = settings.DEFAULT_OPACITY_ON_BLUR
             self.__update_opacity()
-
+            
             self.log("Enabled BlurBG.")
 
         else:
@@ -191,13 +192,17 @@ class Window:
     def minimize(self) -> None:
         """ Minimize window to taskbar. """
 
+        group = self._screen.group
+        
         win32gui.ShowWindow(self.hwnd, win32con.SW_MINIMIZE)
         self._rect = Rect.from_list(win32gui.GetWindowRect(self.hwnd))
 
         if self.blur_bg is not None:
             self.blur_bg.resize_to_window()
 
-        self.screen.dettach_window(self)
+        if group:
+            group.remove_window(self)
+            
         self.log("Minimized.")
 
     def maximize(self) -> None:
@@ -316,11 +321,10 @@ def load_window_hwnd(hwnd, force_reinit: bool = False) -> Window | None:
             return _windows_cache.get(hwnd)
 
     if settings.INGORE_CHILDREN:
-        for win in _windows_cache.values():
-            # Ensure the main app's window will be handled, not a child.
-            owner = win32gui.GetWindow(hwnd, win32con.GW_OWNER)
-            if owner != 0:
-                return
+        # Ensure the main app's window will be handled, not a child.
+        owner = win32gui.GetWindow(hwnd, win32con.GW_OWNER)
+        if owner != 0:
+            return
 
     rect = Rect.from_list(win32gui.GetWindowRect(hwnd))
     screen = monitor.get_screen(win32api.MonitorFromRect(rect.raw))
