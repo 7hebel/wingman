@@ -20,7 +20,6 @@ import time
 user32 = ctypes.windll.user32
 kernel32 = ctypes.windll.kernel32
 
-
 _windows_cache: dict[int, "Window"] = {}
 
 
@@ -66,6 +65,7 @@ class Window:
         _windows_cache[self.hwnd] = self
 
         self.blur_bg: blur.BlurSlaveWindow | None = None
+        self.last_set_rect: Rect | None = None
         self.opacity = 255
         self.l_shift = 0
 
@@ -106,7 +106,8 @@ class Window:
     def on_window_killed(self) -> None:
         """ Standard window kill callback. """
 
-        self._screen.dettach_window(self)
+        if self._screen:
+            self._screen.dettach_window(self)
 
         if self.blur_bg is not None:
             self.blur_bg.destroy()
@@ -150,7 +151,7 @@ class Window:
     def is_visible(self) -> bool:
         return bool(not win32gui.IsIconic(self.hwnd)) and \
                win32gui.IsWindowVisible(self.hwnd) and \
-               win32gui.GetWindowPlacement(self.hwnd)[1] != win32con.SW_MINIMIZE
+               win32gui.GetWindowPlacement(self.hwnd)[1] not in (win32con.SW_MINIMIZE, win32con.SW_HIDE)
 
     @property
     def minimum_width(self) -> int:
@@ -170,6 +171,7 @@ class Window:
 
     def toogle_blur(self) -> None:
         """ Toogle blur background slave window. """
+
         if self.blur_bg is None:
             self.blur_bg = blur.BlurSlaveWindow(self)
             self.opacity = settings.DEFAULT_OPACITY_ON_BLUR
@@ -234,11 +236,14 @@ class Window:
         win32gui.SetForegroundWindow(self.hwnd)
         self.log("Focused.")
 
-    def draw_in_rect(self, rect: Rect | None = None) -> Rect:
+    def draw_in_rect(self, rect: Rect | None = None, restore: bool = False) -> Rect:
         """ Move to specified (or current) rectangle, apply bounding error fixes, returns real Rect after set. """
 
         if rect is None:
             rect = self.rect
+            
+        if restore:
+            rect = self.last_set_rect
 
         self.__fix_max_win()
         win32gui.MoveWindow(
@@ -252,8 +257,11 @@ class Window:
 
         if self.blur_bg is not None:
             self.blur_bg.resize_to_window()
-
-        return Rect.from_RECT(screen_test.get_extended_frame_bounds(self.hwnd))
+        
+        exact_rect = Rect.from_RECT(screen_test.get_extended_frame_bounds(self.hwnd))
+        self.last_set_rect = exact_rect
+        
+        return exact_rect
 
     def __update_opacity(self) -> None:
         """ Apply window opacity. """

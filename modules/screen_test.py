@@ -2,6 +2,7 @@ from modules.position import Rect
 from modules import settings
 
 from ctypes import wintypes
+import threading
 import win32gui
 import ctypes
 
@@ -31,7 +32,14 @@ def get_extended_frame_bounds(hwnd: int) -> RECT:
 
 
 def set_window_rect(hwnd: int, rect: Rect) -> None:
-    win32gui.MoveWindow(
+    """ 
+    Update window's position. 
+    This function contains kinda weird checking mechanism ensuring
+    function won't cause deadlock as a window apparently might not respond\
+    to the move request. (Thanks Microsoft, good job.) 
+    """
+    
+    move_fn = lambda: win32gui.MoveWindow(
         hwnd,
         rect.left,
         rect.top,
@@ -39,7 +47,10 @@ def set_window_rect(hwnd: int, rect: Rect) -> None:
         rect.h,
         True
     )
-
+        
+    move_th = threading.Thread(target=move_fn, daemon=True)
+    move_th.start()
+    move_th.join(0.5)
 
 def get_bounding_diff(hwnd: int) -> tuple[int, int, int, int]:
     """
@@ -58,8 +69,8 @@ def get_bounding_diff(hwnd: int) -> tuple[int, int, int, int]:
 
     diff_x = ext_frame_x - rect_x
     diff_y = ext_frame_y - rect_y
-    diff_w = ext_frame_r - rect_r
-    diff_h = ext_frame_b - rect_b
+    diff_w = 2 * (ext_frame_r - rect_r)
+    diff_h = (ext_frame_b - rect_b) // 2
 
     return (diff_x, diff_y, diff_w, diff_h)
 
@@ -70,7 +81,6 @@ def get_window_min_width(hwnd: int) -> int:
     custom-set minimum width without checking how will they respond to shrinking request
     and what will be their actual size output that might not be what was expected.
     """
-
     start_rect = Rect.from_list(win32gui.GetWindowRect(hwnd))
     test_rect = Rect.from_xywh(0, 0, settings.WINDOW_MIN_W, settings.WINDOW_MIN_W)
 
@@ -78,4 +88,5 @@ def get_window_min_width(hwnd: int) -> int:
     minimum_width = Rect.from_RECT(get_extended_frame_bounds(hwnd)).w
 
     set_window_rect(hwnd, start_rect)
+
     return minimum_width

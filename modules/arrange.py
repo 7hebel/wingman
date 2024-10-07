@@ -41,7 +41,6 @@ class Group:
 
     def attach_window(self, window: "Window", from_direction: Direction) -> bool:
         """ Append new window from selected side. Returns False if maximum windows in group. """
-
         if len(self.windows) >= settings.MAX_WINS_IN_GROUP:
             logs.system_log(f"Cannot add window: {window.text} to group (group is full)")
             return False
@@ -85,7 +84,6 @@ class Group:
 
     def rearrange(self, _fix_call: bool = False) -> None:
         """ Arrange windows in group respecting border shifts. """
-
         if not self.windows:
             return
 

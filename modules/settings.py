@@ -19,6 +19,7 @@ PUSH_KEY = "#"
 RESIZE_KEY = "#!"
 FOCUS_KEY = "#+"
 OPACITY_KEY = "^+"
+RESTORE_SHORTCUT = "#^r"
 BLUR_TOOGLE_SHORTCUT = "#+b"
 
 # Ignoring.
@@ -28,6 +29,8 @@ IGNORE_WIN_TEXT = [
     "Calculator",
     "Mechvibes",
     "Delete File",
+    "Setup",
+    "Search"
 ] 
 INGORE_CHILDREN = True
 

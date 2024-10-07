@@ -1,3 +1,7 @@
+from ctypes import windll
+import win32gui
+import win32con
+import ctypes
 import sys
 import os
 
@@ -9,7 +13,7 @@ MAIN_FILE = os.path.abspath("./main.py")
 def add_to_startup() -> str:
     """ Automatically start main.py file on system's startup. """
     
-    bat_content = f"py {MAIN_FILE}"
+    bat_content = f"py {MAIN_FILE} --hide"
     
     if os.path.exists(STARTUP_FILE):
         os.remove(STARTUP_FILE)
@@ -20,5 +24,6 @@ def add_to_startup() -> str:
     print("Added wingman to autostart.")
 
 
-if "--startup" in sys.argv:
-    add_to_startup()
+def execute_flags() -> None:
+    if "--startup" in sys.argv:
+        add_to_startup()
