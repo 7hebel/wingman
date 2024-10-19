@@ -2,3 +2,4 @@ pywin32
 ahk
 ahk[binary]
 BlurWindow
+colorama
